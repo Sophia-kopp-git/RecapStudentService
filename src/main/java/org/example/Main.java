@@ -8,7 +8,8 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
 
-        ShopService shopService = new ShopService();
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(idService);
 
         Product shampoo = new Product("2", "Shampoo");
         Product toothPaste = new Product("3", "Tooth paste");

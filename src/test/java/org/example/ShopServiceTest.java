@@ -12,7 +12,8 @@ class ShopServiceTest {
     @Test
     void addOrderTest() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(idService);
         List<String> productsIds = List.of("1");
 
         //WHEN
@@ -27,7 +28,8 @@ class ShopServiceTest {
     @Test
     void addOrderTest_whenInvalidProductId_expectNull() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        IdService idService = new IdService();
+        ShopService shopService = new ShopService(idService);
         List<String> productsIds = List.of("1", "2");
 
         //WHEN

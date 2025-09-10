@@ -1,5 +1,6 @@
 package org.example;
 
+import lombok.RequiredArgsConstructor;
 import org.example.CustomExceptions.NoProductWithThisIdException;
 
 import java.util.ArrayList;
@@ -7,9 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
 public class ShopService {
     private ProductRepo productRepo = new ProductRepo();
     private OrderRepo orderRepo = new OrderMapRepo();
+
+    private IdService idService = new IdService();
+    public ShopService(IdService idService) {
+        this.idService = idService;
+    }
 
     public List<Product> getAllProducts() {
         return productRepo.getProducts();
@@ -35,7 +42,7 @@ public class ShopService {
 
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, null);
+        Order newOrder = new Order(idService.generateId(), products, OrderStatus.PROCESSING, null);
 
         return orderRepo.addOrder(newOrder);
     }
