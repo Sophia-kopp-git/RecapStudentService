@@ -1,7 +1,10 @@
 package org.example;
 
+import org.example.CustomExceptions.NoProductWithThisIdException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ShopService {
@@ -11,16 +14,27 @@ public class ShopService {
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
         for (String productId : productIds) {
-            Product productToOrder = productRepo.getProductById(productId);
+            Optional<Product> productToOrder = productRepo.getProductById(productId);
             if (productToOrder == null) {
-                System.out.println("Product mit der Id: " + productId + " konnte nicht bestellt werden!");
-                return null;
+                throw new NoProductWithThisIdException(
+                        "Product mit der Id: " + productId + " konnte nicht bestellt werden!");
             }
-            products.add(productToOrder);
+            products.add(productToOrder.get());
+
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products);
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING);
 
         return orderRepo.addOrder(newOrder);
+    }
+
+    public List<Order> getAllOrdersOfSelectedOrderStatus(OrderStatus orderStatus) {
+
+        List<Order> selectedOrders = orderRepo.getOrders()
+                .stream()
+                .filter(order -> order.orderStatus().equals(orderStatus))
+                .toList();
+
+        return selectedOrders;
     }
 }
