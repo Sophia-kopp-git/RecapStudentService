@@ -19,7 +19,7 @@ public class ProductRepo {
     public Optional<Product> getProductById(String id) {
         for (Product product : products) {
             if (product.id().equals(id)) {
-                return Optional.ofNullable(product);
+                return Optional.of(product);
             }
         }
         return null;

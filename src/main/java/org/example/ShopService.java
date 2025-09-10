@@ -11,6 +11,18 @@ public class ShopService {
     private ProductRepo productRepo = new ProductRepo();
     private OrderRepo orderRepo = new OrderMapRepo();
 
+    public List<Product> getAllProducts() {
+        return productRepo.getProducts();
+    }
+
+    public Product addProduct(Product product) {
+        return productRepo.addProduct(product);
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepo.getOrders();
+    }
+
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
         for (String productId : productIds) {
@@ -36,5 +48,9 @@ public class ShopService {
                 .toList();
 
         return selectedOrders;
+    }
+
+    public Order updateOrderStatus(String id, OrderStatus orderStatus) {
+        return orderRepo.updateOrderStatus(id, orderStatus);
     }
 }

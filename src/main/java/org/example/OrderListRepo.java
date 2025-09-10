@@ -35,4 +35,9 @@ public class OrderListRepo implements OrderRepo {
             }
         }
     }
+
+    @Override
+    public Order updateOrderStatus(String id, OrderStatus orderStatus) {
+        return null;
+    }
 }
