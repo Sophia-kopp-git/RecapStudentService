@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.Order;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,8 @@ public class OrderMapRepo implements OrderRepo{
 
     @Override
     public Order addOrder(Order newOrder) {
+        LocalDateTime dateTimeOrder = LocalDateTime.now();
+        newOrder = newOrder.withDateTime(dateTimeOrder);
         orders.put(newOrder.id(), newOrder);
         return newOrder;
     }

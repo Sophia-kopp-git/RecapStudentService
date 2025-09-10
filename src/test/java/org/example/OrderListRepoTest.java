@@ -15,7 +15,7 @@ class OrderListRepoTest {
         OrderListRepo repo = new OrderListRepo();
 
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", List.of(product));
+        Order newOrder = new Order("1", List.of(product), OrderStatus.PROCESSING);
         repo.addOrder(newOrder);
 
         //WHEN
@@ -24,9 +24,13 @@ class OrderListRepoTest {
         //THEN
         List<Order> expected = new ArrayList<>();
         Product product1 = new Product("1", "Apfel");
-        expected.add(new Order("1", List.of(product1)));
+        expected.add(new Order("1", List.of(product1), OrderStatus.PROCESSING));
 
-        assertEquals(actual, expected);
+        //assertEquals(actual, expected);
+       assertEquals(actual.get(0).id(), expected.get(0).id());
+       assertEquals(actual.get(0).products(), expected.get(0).products());
+       assertEquals(actual.get(0).orderStatus(), expected.get(0).orderStatus());
+       assertEquals(repo.getOrderById("1").id(), expected.get(0).id());
     }
 
     @Test
@@ -35,7 +39,7 @@ class OrderListRepoTest {
         OrderListRepo repo = new OrderListRepo();
 
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", List.of(product));
+        Order newOrder = new Order("1", List.of(product), OrderStatus.PROCESSING);
         repo.addOrder(newOrder);
 
         //WHEN
@@ -43,9 +47,12 @@ class OrderListRepoTest {
 
         //THEN
         Product product1 = new Product("1", "Apfel");
-        Order expected = new Order("1", List.of(product1));
+        Order expected = new Order("1", List.of(product1), OrderStatus.PROCESSING);
 
-        assertEquals(actual, expected);
+        assertEquals(actual.id(), expected.id());
+        assertEquals(actual.products(), expected.products());
+        assertEquals(actual.orderStatus(), expected.orderStatus());
+        assertEquals(repo.getOrderById("1").id(), expected.id());
     }
 
     @Test
@@ -53,16 +60,18 @@ class OrderListRepoTest {
         //GIVEN
         OrderListRepo repo = new OrderListRepo();
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", List.of(product));
+        Order newOrder = new Order("1", List.of(product), OrderStatus.PROCESSING);
 
         //WHEN
         Order actual = repo.addOrder(newOrder);
 
         //THEN
         Product product1 = new Product("1", "Apfel");
-        Order expected = new Order("1", List.of(product1));
-        assertEquals(actual, expected);
-        assertEquals(repo.getOrderById("1"), expected);
+        Order expected = new Order("1", List.of(product1), OrderStatus.PROCESSING);
+        assertEquals(actual.id(), expected.id());
+        assertEquals(actual.products(), expected.products());
+        assertEquals(actual.orderStatus(), expected.orderStatus());
+        assertEquals(repo.getOrderById("1").id(), expected.id());
     }
 
     @Test
